@@ -35,7 +35,6 @@ export default class TestScope {
 
     const start = new Date();
     console.log(`Cavy test suite started at ${start}.`);
-    console.tron.log(`Cavy test suite started at ${start}.`);
 
     for (let i = 0; i < this.testCases.length; i++) {
       let {description, f, success, fail} = this.testCases[i];
@@ -45,7 +44,6 @@ export default class TestScope {
           success()
         } else {
           console.log(`${description}  ✅`);
-          console.tron.log(`${description}  ✅`);
         }
 
       } catch (e) {
