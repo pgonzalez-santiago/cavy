@@ -51,7 +51,6 @@ export default class TestScope {
           fail()
         } else {
           console.warn(`${description}  ❌\n   ${e.message}`);
-          console.warn(`${description}  ❌\n   ${e.message}`);
         }
       }
       await this.component.clearAsync();
