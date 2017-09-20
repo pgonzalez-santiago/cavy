@@ -32,17 +32,29 @@ export default class TestScope {
     if (this.startDelay) {
       await this.pause(this.startDelay);
     }
-    
+
     const start = new Date();
     console.log(`Cavy test suite started at ${start}.`);
+    console.tron.log(`Cavy test suite started at ${start}.`);
 
     for (let i = 0; i < this.testCases.length; i++) {
-      let {description, f} = this.testCases[i];
+      let {description, f, success, fail} = this.testCases[i];
       try {
         await f.call(this);
-        console.log(`${description}  ✅`);
+        if (success) {
+          success()
+        } else {
+          console.log(`${description}  ✅`);
+          console.tron.log(`${description}  ✅`);
+        }
+
       } catch (e) {
-        console.warn(`${description}  ❌\n   ${e.message}`);
+        if (fail) {
+          fail()
+        } else {
+          console.warn(`${description}  ❌\n   ${e.message}`);
+          console.warn(`${description}  ❌\n   ${e.message}`);
+        }
       }
       await this.component.clearAsync();
       this.component.reRender();
@@ -122,9 +134,9 @@ export default class TestScope {
   // f     - The test case.
   //
   // See example above.
-  it(label, f) {
+  it(label, f, success, fail) {
     const description = `${this.describeLabel}: ${label}`;
-    this.testCases.push({description, f});
+    this.testCases.push({description, f, success, fail});
   }
 
   // Public: Fill in a `TextInput`-compatible component with a string value.
